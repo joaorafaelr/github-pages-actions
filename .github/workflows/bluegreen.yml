@@ -1,0 +1,28 @@
+name: Blue-Green Swap
+on:
+  workflow_dispatch:  # This allows manual triggering of the workflow
+ 
+jobs:
+  swap-contents:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+ 
+      - name: Swap index files
+        run: |
+          # Rename index.html to a temporary file
+          mv index.html temp_index.html
+          # Rename index_v2.html to index.html (swapping to "green")
+          mv index_v2.html index.html
+          # Rename the temp_index.html (original index.html) to index_v2.html (swapping to "blue")
+          mv temp_index.html index_v2.html
+ 
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add index.html index_v2.html
+          git commit -m "Swapped index.html with index_v2.html"
+          git push

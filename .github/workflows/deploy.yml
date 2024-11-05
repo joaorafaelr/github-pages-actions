@@ -1,0 +1,41 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run HTML linter
+        run: npm run lint
+
+      - name: Run test script for <title> tag
+        run: npm run test:title
+
+  deploy:
+    needs: lint_and_test
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to hosting platform
+        run: |
+          # Insert deployment commands here, e.g., `npm run deploy`

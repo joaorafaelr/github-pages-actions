@@ -44,7 +44,8 @@ jobs:
             fs.writeFileSync('README.md', readmeContent);
           "
       - name: push
-        run: git add .
+        run: |
+          git add .
           git commit -m 'commit'
           git push
           

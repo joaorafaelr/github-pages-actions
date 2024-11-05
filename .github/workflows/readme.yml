@@ -1,11 +1,15 @@
 name: Generate README from index.html
 
 on:
-  push:
+ workflow_dispatch:
+  inputs:
+    custom_title:
+      description: "Enter the title for the HTML page"
+      required: true
+      default: "Default Title"  # Fallback title if none provided
+ push:
     branches:
       - main
-  workflow_dispatch: # Allows manual triggering of the workflow
-
 permissions:
   contents: write
   pages: write

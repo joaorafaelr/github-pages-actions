@@ -24,7 +24,8 @@ jobs:
         with:
           node-version: '16'
       - name: Execute
-        run: npm install fs jsdom
+        run: | 
+          npm install fs jsdom
           node -e "
             const fs = require('fs');
             const { JSDOM } = require('jsdom');
